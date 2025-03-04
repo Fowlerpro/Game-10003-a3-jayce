@@ -39,17 +39,23 @@ namespace MohawkGame2D
         }
         public void lives()
         {
-            if (player.circleX > scaffoldDestructionX)
-            {
-                game.islife1Cooldown = true;
-            }
-            else if (player.circleX > scaffoldDestructionX && game.islife1Gone == true)
-            {
-                game.islife2Cooldown = true;
-            }
-            else if (player.circleX > scaffoldDestructionX && game.islife2Gone == true)
-            {
-                game.islife3Cooldown = true;
+            if (player.circleX >= scaffoldDestructionX)
+            {//lives do not work because we can't edit game.cs in this class yet, need to research
+                if (game.islife1Gone == false)
+                {
+                    scaffoldDestructionX = 800;
+                    game.islife1Cooldown = true;
+                }
+                if (game.islife1Gone == true)
+                {
+                    scaffoldDestructionX = 800;
+                    game.islife2Cooldown = true;
+                }
+                if (game.islife2Gone == true)
+                {
+                    scaffoldDestructionX = 800;
+                    game.islife3Cooldown = true;
+                }
             }
         }
     }

@@ -100,8 +100,7 @@ namespace MohawkGame2D
                 if (islife2Gone == true)
                 {
                     scaffoldX = 800;
-                    islife3Cooldown = true;
-                    Draw.Circle(200, 200, 5);
+                    islife3Cooldown = true; 
                 }
             }
             //lives temp
