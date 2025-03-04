@@ -92,12 +92,12 @@ namespace MohawkGame2D
                     scaffoldX = 800;
                     islife1Cooldown = true;
                 }
-                if (islife1Gone == true && islife1Cooldown == false)
+                if (islife1Gone == true)
                 {
                     scaffoldX = 800;
                     islife2Cooldown = true;
                 }
-                if (islife2Gone == true && islife2Cooldown == false)
+                if (islife2Gone == true)
                 {
                     scaffoldX = 800;
                     islife3Cooldown = true;
@@ -114,7 +114,6 @@ namespace MohawkGame2D
                     if (lifeX1 >= Window.Width)
                     {
                         islife1Gone = true;
-                        islife1Cooldown = false;
                     }
                 }
                  if (islife2Cooldown == true)
@@ -123,7 +122,6 @@ namespace MohawkGame2D
                     if (lifeX2 >= Window.Width)
                     {
                         islife2Gone = true;
-                        islife2Cooldown = false;
                     }
                 }
                  if (islife3Cooldown == true)
@@ -132,7 +130,6 @@ namespace MohawkGame2D
                     if (lifeX3 >= Window.Width)
                     {
                         islife3Gone = true;
-                        islife3Cooldown = false;
                     }
                 }
                  
