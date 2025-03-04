@@ -12,20 +12,14 @@ namespace MohawkGame2D
     {
         // Place your variables here:
         Player player;
-
-        ////player 
-        //float playSpeed = 150;
-        //float playY = 200;
-        //float circleX = 100;
+        DestructableWalls destructableWalls;
         //missle
         float missleSpeed = 250;
-        float missleX = 100;
+        public static float missleX = 100;
         //Random scaffold walls
         float scaffoldSpeed = 100;
         float scaffoldX = 420;
         float scaffoldY = 0;
-        float scaffoldDestructionX = 600;
-        float scaffoldDestructionSpeed = 100;
         
         float lifeY = 20;
         float lifeX1 = 300;
@@ -33,9 +27,13 @@ namespace MohawkGame2D
         float lifeX3 = 360;
         float checkLifeX = 400;
         float emptyLifeX = 200;
-        bool islife1Gone = false;
-        bool islife2Gone = false;
-        bool islife3Gone = false;
+       public bool islife1Gone = false;
+       public bool islife2Gone = false;
+       public bool islife3Gone = false;
+       public bool islife1Cooldown = false;
+       public bool islife2Cooldown = false;
+       public bool islife3Cooldown = false;
+        //working on a life cooldown 
 
 
         /// <summary>
@@ -46,6 +44,7 @@ namespace MohawkGame2D
             Window.SetSize(400, 400);
             Window.SetTitle("Tunnel Flyer");
             player = new Player();
+            destructableWalls = new DestructableWalls();
             //walls = new Wall[100];
             //walls[0] = new Wall(scaffoldX,);
         }
@@ -61,6 +60,8 @@ namespace MohawkGame2D
             Draw.FillColor = Color.Black;
             player.Render();
             player.PlayerFunction();
+            destructableWalls.render();
+            destructableWalls.destroyed();
             //player
             //Draw.Circle(circleX, playY, 10);
             //if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 300)
@@ -94,13 +95,13 @@ namespace MohawkGame2D
             else if (player.circleX >= scaffoldX && player.playY <= scaffoldY +200)
             {
                 scaffoldX = 800;
-                //lifeX1 = 800;
+                //lifeX1 = emptyLifeX;
                 islife1Gone = true;
 
 
             }
             //lives temp
-            if (lifeX1 < emptyLifeX)
+            if (lifeX1 < checkLifeX)
             {
                 life2();
             }
@@ -111,20 +112,6 @@ namespace MohawkGame2D
                     islife2Gone = true;
 
                 }
-            }
-            //Make the speed over time
-                //destrutable wall
-                Draw.FillColor = Color.Blue;
-            
-            Draw.Rectangle(scaffoldDestructionX, 0, 40, 400);
-            scaffoldDestructionX -= Time.DeltaTime * scaffoldDestructionSpeed;
-            if (scaffoldDestructionX < -10)
-            {
-                scaffoldDestructionX = 500;
-            }
-            else if (missleX > scaffoldDestructionX)
-            {
-                scaffoldDestructionX = 700;
             }
             //health gone
             if (islife1Gone == true)
