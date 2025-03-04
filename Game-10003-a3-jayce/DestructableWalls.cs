@@ -11,8 +11,9 @@ namespace MohawkGame2D
         Game game;
         float scaffoldDestructionX = 600;
         float scaffoldDestructionSpeed = 100;
+
         
-        private void setup()
+        public void wallsetup()
         {
             player = new Player();
             game = new Game();
@@ -42,7 +43,14 @@ namespace MohawkGame2D
             {
                 game.islife1Cooldown = true;
             }
-            else if (player.circleX > scaffoldDestructionX && game.islife1Gone == true);
+            else if (player.circleX > scaffoldDestructionX && game.islife1Gone == true)
+            {
+                game.islife2Cooldown = true;
+            }
+            else if (player.circleX > scaffoldDestructionX && game.islife2Gone == true)
+            {
+                game.islife3Cooldown = true;
+            }
         }
     }
 }

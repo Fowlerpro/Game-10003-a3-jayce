@@ -25,7 +25,6 @@ namespace MohawkGame2D
         float lifeX1 = 300;
         float lifeX2 = 330;
         float lifeX3 = 360;
-        float checkLifeX = 400;
         float emptyLifeX = 200;
        public bool islife1Gone = false;
        public bool islife2Gone = false;
@@ -34,6 +33,9 @@ namespace MohawkGame2D
        public bool islife2Cooldown = false;
        public bool islife3Cooldown = false;
         //working on a life cooldown 
+        // need array of scaffolds
+        //need end screen
+        // need replay button
 
 
         /// <summary>
@@ -45,8 +47,7 @@ namespace MohawkGame2D
             Window.SetTitle("Tunnel Flyer");
             player = new Player();
             destructableWalls = new DestructableWalls();
-            //walls = new Wall[100];
-            //walls[0] = new Wall(scaffoldX,);
+            destructableWalls.wallsetup();
         }
 
         /// <summary>
@@ -56,22 +57,14 @@ namespace MohawkGame2D
         {
             Window.ClearBackground(color: Color.DarkGray);
             lives();
+            livesRender();
             //gameover();
             Draw.FillColor = Color.Black;
             player.Render();
             player.PlayerFunction();
             destructableWalls.render();
             destructableWalls.destroyed();
-            //player
-            //Draw.Circle(circleX, playY, 10);
-            //if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 300)
-            //{
-            //    playY += Time.DeltaTime * playSpeed;
-            //}
-            //if (Input.IsKeyboardKeyDown(KeyboardInput.Up) && playY >= 100)
-            //{
-            //    playY -= Time.DeltaTime * playSpeed;
-            //}
+            destructableWalls.lives();
             //Missle
             Draw.FillColor = Color.Yellow;
             Draw.Circle(missleX, player.playY +20, 5);
@@ -92,39 +85,61 @@ namespace MohawkGame2D
             {
                 scaffoldX = 420;
             }
-            else if (player.circleX >= scaffoldX && player.playY <= scaffoldY +200)
+            if (player.circleX >= scaffoldX && player.playY <= scaffoldY +200)
             {
-                scaffoldX = 800;
-                //lifeX1 = emptyLifeX;
-                islife1Gone = true;
-
-
-            }
-            //lives temp
-            if (lifeX1 < checkLifeX)
-            {
-                life2();
-            }
-            void life2()
-            {
-                if (player.circleX >= scaffoldX && player.playY <= scaffoldY + 200)
+                if (islife1Gone == false)
                 {
-                    islife2Gone = true;
-
+                    scaffoldX = 800;
+                    islife1Cooldown = true;
+                }
+                if (islife1Gone == true && islife1Cooldown == false)
+                {
+                    scaffoldX = 800;
+                    islife2Cooldown = true;
+                }
+                if (islife2Gone == true && islife2Cooldown == false)
+                {
+                    scaffoldX = 800;
+                    islife3Cooldown = true;
+                    Draw.Circle(200, 200, 5);
                 }
             }
+            //lives temp
             //health gone
-            if (islife1Gone == true)
+            void lives()
             {
-                lifeX1 += Time.DeltaTime * scaffoldSpeed;
-            }
-            if (islife2Gone == true)
-            {
-                lifeX2 += Time.DeltaTime * scaffoldSpeed;
-            }
-        }
-        //lives
-        void lives()
+                if (islife1Cooldown == true)
+                {
+                    lifeX1 += Time.DeltaTime * scaffoldSpeed;
+                    if (lifeX1 >= Window.Width)
+                    {
+                        islife1Gone = true;
+                        islife1Cooldown = false;
+                    }
+                }
+                 if (islife2Cooldown == true)
+                {
+                    lifeX2 += Time.DeltaTime * scaffoldSpeed;
+                    if (lifeX2 >= Window.Width)
+                    {
+                        islife2Gone = true;
+                        islife2Cooldown = false;
+                    }
+                }
+                 if (islife3Cooldown == true)
+                {
+                    lifeX3 += Time.DeltaTime * scaffoldSpeed;
+                    if (lifeX3 >= Window.Width)
+                    {
+                        islife3Gone = true;
+                        islife3Cooldown = false;
+                    }
+                }
+                 
+            };
+           }
+            //lives
+            void livesRender()
         {
             Draw.FillColor = Color.Black;
             Draw.Circle(300, lifeY, 10);
@@ -140,7 +155,7 @@ namespace MohawkGame2D
             Draw.Circle(lifeX3, lifeY, 9);
             void gameover()
             {
-                if (lifeX3 < 0)
+                if (islife3Gone == true)
                 {
                     Draw.Rectangle(0, 0, 400, 400);
                 }
