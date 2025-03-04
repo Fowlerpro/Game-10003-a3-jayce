@@ -11,10 +11,12 @@ namespace MohawkGame2D
     public class Game
     {
         // Place your variables here:
+        Player player;
 
         ////player 
-        float playY = 200;
-        float circleX = 100;
+        //float playSpeed = 150;
+        //float playY = 200;
+        //float circleX = 100;
         //missle
         float missleSpeed = 250;
         float missleX = 100;
@@ -29,7 +31,11 @@ namespace MohawkGame2D
         float lifeX1 = 300;
         float lifeX2 = 330;
         float lifeX3 = 360;
-        
+        float checkLifeX = 400;
+        float emptyLifeX = 200;
+        bool islife1Gone = false;
+        bool islife2Gone = false;
+        bool islife3Gone = false;
 
 
         /// <summary>
@@ -39,6 +45,7 @@ namespace MohawkGame2D
         {
             Window.SetSize(400, 400);
             Window.SetTitle("Tunnel Flyer");
+            player = new Player();
             //walls = new Wall[100];
             //walls[0] = new Wall(scaffoldX,);
         }
@@ -52,7 +59,9 @@ namespace MohawkGame2D
             lives();
             //gameover();
             Draw.FillColor = Color.Black;
-            ////player
+            player.Render();
+            player.PlayerFunction();
+            //player
             //Draw.Circle(circleX, playY, 10);
             //if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 300)
             //{
@@ -64,7 +73,7 @@ namespace MohawkGame2D
             //}
             //Missle
             Draw.FillColor = Color.Yellow;
-            Draw.Circle(missleX, playY +20, 5);
+            Draw.Circle(missleX, player.playY +20, 5);
             if (Input.IsKeyboardKeyDown(KeyboardInput.Space))
             {
                 missleX += Time.DeltaTime * missleSpeed;
@@ -72,7 +81,7 @@ namespace MohawkGame2D
             //or hitswall
             if (missleX > 500)
             {
-                missleX = circleX;
+                missleX = player.circleX;
             }
             //scaffold
             Draw.FillColor = Color.Black;
@@ -82,23 +91,24 @@ namespace MohawkGame2D
             {
                 scaffoldX = 420;
             }
-            else if (circleX >= scaffoldX && playY <= scaffoldY +200)
+            else if (player.circleX >= scaffoldX && player.playY <= scaffoldY +200)
             {
                 scaffoldX = 800;
                 //lifeX1 = 800;
-                lifeX1 += Time.DeltaTime * scaffoldSpeed;
-                
+                islife1Gone = true;
+
+
             }
             //lives temp
-            if (lifeX1 < 400)
+            if (lifeX1 < emptyLifeX)
             {
                 life2();
             }
             void life2()
             {
-                if (circleX >= scaffoldX && playY <= scaffoldY + 200)
+                if (player.circleX >= scaffoldX && player.playY <= scaffoldY + 200)
                 {
-                    lifeX2 += Time.DeltaTime * scaffoldSpeed;
+                    islife2Gone = true;
 
                 }
             }
@@ -116,6 +126,15 @@ namespace MohawkGame2D
             {
                 scaffoldDestructionX = 700;
             }
+            //health gone
+            if (islife1Gone == true)
+            {
+                lifeX1 += Time.DeltaTime * scaffoldSpeed;
+            }
+            if (islife2Gone == true)
+            {
+                lifeX2 += Time.DeltaTime * scaffoldSpeed;
+            }
         }
         //lives
         void lives()
@@ -132,24 +151,6 @@ namespace MohawkGame2D
             Draw.Circle(lifeX1, lifeY, 9);
             Draw.Circle(lifeX2, lifeY, 9);
             Draw.Circle(lifeX3, lifeY, 9);
-            //    bool scaffoldhit()
-            //    {
-            //        float distance planeToScaffold = Vector2.Distance(position,)
-            //    }
-            //    if (scaffoldX = circleX)
-            //    {
-            //        life =  -= 1;
-            //    }
-            //    if (life <= 2)
-            //    { 
-            //        lifeX1 = -10;
-            //    }
-            //        if (life <= 1)
-            //    {
-            //        lifeX2 = -10;
-            //    }
-            //}
-            //Gameover
             void gameover()
             {
                 if (lifeX3 < 0)

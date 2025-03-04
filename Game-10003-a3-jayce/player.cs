@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MohawkGame2D;
+﻿// Include the namespaces (code libraries) you need below.
+using System;
+using System.Numerics;
 
+// The namespace your code is in.
 namespace MohawkGame2D
 {
     public class Player
     {
         //player 
-        float playSpeed = 150;
-        float playY = 200;
-        float circleX = 100;
-        
-    
-      public void PlayerFunction()
+        public float playSpeed = 150;
+        public float playY = 200;
+        public float circleX = 100;
+        //jet
+        public void Render()
         {
-
-
-            //player
             Draw.Circle(circleX, playY, 10);
+        }
+        //player movement
+        public void PlayerFunction()
+        {
             if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 300)
             {
                 playY += Time.DeltaTime * playSpeed;
