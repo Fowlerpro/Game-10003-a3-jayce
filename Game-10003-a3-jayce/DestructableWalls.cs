@@ -44,7 +44,6 @@ namespace MohawkGame2D
             {
 
                 life.lifeLost(scaffoldDestructionX);
-                scaffoldDestructionX = 800;
             }
         }
     }

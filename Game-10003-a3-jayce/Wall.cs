@@ -31,10 +31,9 @@ namespace MohawkGame2D
         }
         public void lives()
         {
-            if (player.circleX >= scaffoldX && player.playY <= scaffoldY)
+            if (player.circleX >= scaffoldX && player.playY >= 200)
             {
                 life.lifeLost(scaffoldX);
-                scaffoldX = 700;
             }
         }
     }

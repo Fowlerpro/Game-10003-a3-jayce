@@ -15,9 +15,7 @@ namespace MohawkGame2D
         DestructableWalls destructableWalls;
         Life life;
         Wall walls;
-        //missle
-        //float missleSpeed = 250;
-        //public static float missleX = 100;       
+        Missle missle;
         //working on a life cooldown 
         // need array of scaffolds
         //need end screen
@@ -35,9 +33,12 @@ namespace MohawkGame2D
             destructableWalls = new DestructableWalls();
             life = new Life();
             walls = new Wall();
+            missle = new Missle();
             destructableWalls.destructableWallsetup();
             walls.wallSetup();
             life.lifeSetup();
+            missle.misslesetup();
+            life.lifeLost(800);
         }
 
         /// <summary>
@@ -47,108 +48,18 @@ namespace MohawkGame2D
         {
             Window.ClearBackground(color: Color.DarkGray);
             life.lives();
-            life.livesRender();
             //gameover();
             Draw.FillColor = Color.Black;
             player.Render();
             player.PlayerFunction();
+            missle.missleRender();
             destructableWalls.render();
             destructableWalls.destroyed();
             destructableWalls.lives();
             walls.render();
             walls.lives();
-            //Missle
-            //Draw.FillColor = Color.Yellow;
-            //Draw.Circle(missleX, player.playY +20, 5);
-            //if (Input.IsKeyboardKeyDown(KeyboardInput.Space))
-            //{
-            //    missleX += Time.DeltaTime * missleSpeed;
-            //}
-            ////or hitswall
-            //if (missleX > 500)
-            //{
-            //    missleX = player.circleX;
-            //}
-            ////scaffold
-            //Draw.FillColor = Color.Black;
-            //Draw.Rectangle(scaffoldX, scaffoldY, 40, 200);
-            //scaffoldX -= Time.DeltaTime * scaffoldSpeed;
-            //if (scaffoldX < -5)
-            //{
-            //    scaffoldX = 420;
-            //}
-            //if (player.circleX >= scaffoldX && player.playY <= scaffoldY +200)
-            //{
-            //    if (life.islife1Gone == false)
-            //    {
-            //        scaffoldX = 800;
-            //        life.islife1Cooldown = true;
-            //    }
-            //    if (life.islife1Gone == true)
-            //    {
-            //        scaffoldX = 800;
-            //        life.islife2Cooldown = true;
-            //    }
-            //    if (life.islife2Gone == true)
-            //    {
-            //        scaffoldX = 800;
-            //        life.islife3Cooldown = true; 
-            //    }
-            //}
-            //lives temp
-            //health gone
-            //void lives()
-            //{
-            //    if (islife1Cooldown == true)
-            //    {
-            //        lifeX1 += Time.DeltaTime * scaffoldSpeed;
-            //        if (lifeX1 >= Window.Width)
-            //        {
-            //            islife1Gone = true;
-            //        }
-            //    }
-            //     if (islife2Cooldown == true)
-            //    {
-            //        lifeX2 += Time.DeltaTime * scaffoldSpeed;
-            //        if (lifeX2 >= Window.Width)
-            //        {
-            //            islife2Gone = true;
-            //        }
-            //    }
-            //     if (islife3Cooldown == true)
-            //    {
-            //        lifeX3 += Time.DeltaTime * scaffoldSpeed;
-            //        if (lifeX3 >= Window.Width)
-            //        {
-            //            islife3Gone = true;
-            //        }
-            //    }
-                 
-            //};
-           }
-        //    //lives
-        //    void livesRender()
-        //{
-        //    Draw.FillColor = Color.Black;
-        //    Draw.Circle(300, lifeY, 10);
-        //    Draw.Circle(330, lifeY, 10);
-        //    Draw.Circle(360, lifeY, 10);
-        //    Draw.FillColor = Color.Gray;
-        //    Draw.Circle(300, lifeY, 9);
-        //    Draw.Circle(330, lifeY, 9);
-        //    Draw.Circle(360, lifeY, 9);
-        //    Draw.FillColor = Color.Red;
-        //    Draw.Circle(lifeX1, lifeY, 9);
-        //    Draw.Circle(lifeX2, lifeY, 9);
-        //    Draw.Circle(lifeX3, lifeY, 9);
-        //    void gameover()
-        //    {
-        //        if (islife3Gone == true)
-        //        {
-        //            Draw.Rectangle(0, 0, 400, 400);
-        //        }
-        //    }
-        //}
-
+            life.livesRender();
+            
+        }
     }
 }

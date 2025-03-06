@@ -12,7 +12,6 @@ namespace MohawkGame2D
         float lifeX1 = 300;
         float lifeX2 = 330;
         float lifeX3 = 360;
-        int lifeX = 270 + 30;
         float emptyLifeX = 200;
         float lifeSpeed = 100;
         bool islife2Gone = false;
@@ -26,62 +25,64 @@ namespace MohawkGame2D
         }
         public void livesRender()
         {
-            //Draw.FillColor = Color.Black;
-            //Draw.Circle(300, lifeY, 10);
-            //Draw.Circle(330, lifeY, 10);
-            //Draw.Circle(360, lifeY, 10);
             for (int i = 0; i <3; i++)
             {
+                int lifeX = 300 + i * 30;
                 Draw.FillColor = Color.Black;
-                Draw.Circle(x, lifeY, 10);
+                Draw.Circle(lifeX, lifeY, 10);
             }
-            Draw.FillColor = Color.Gray;
-            Draw.Circle(300, lifeY, 9);
-            Draw.Circle(330, lifeY, 9);
-            Draw.Circle(360, lifeY, 9);
-            Draw.FillColor = Color.Red;
-            Draw.Circle(lifeX1, lifeY, 9);
-            Draw.Circle(lifeX2, lifeY, 9);
-            Draw.Circle(lifeX3, lifeY, 9);
+            for (int i = 0; i < 3; i++)
+            {
+                int lifeX = 300 + i * 30;
+                Draw.FillColor = Color.Gray;
+                Draw.Circle(lifeX, lifeY, 9);
+            }
+            for (int i = 0;i < 3; i++)
+            {
+                int lifeX = 300 + i * 30;
+                Draw.FillColor = Color.Red;
+                Draw.Circle(lifeX, lifeY, 9);
+            }
         }
         public void lifeLost(float walltouching)
-        {  if (walltouching >= -10)
+        {  if (walltouching >= player.circleX)
+            {
+                lifeCooldowns[0] = true;
+            }
+            else if (livesGone[0] == true && walltouching >= player.circleX)
             {
                 lifeCooldowns[1] = true;
             }
-            if (livesGone[1] == true && walltouching >= -10)
+            else if (islife2Gone == true && walltouching >= player.circleX)
             {
                 lifeCooldowns[2] = true;
             }
-            if (islife2Gone == true)
-            {
-                lifeCooldowns[3] = true;
-            }
+            walltouching = 800;
         }
         public void lives()
         {
-            if (lifeCooldowns[1] == true)
+            if (lifeCooldowns[0] == true)
             {
                 lifeX1 += Time.DeltaTime * lifeSpeed;
                 if (lifeX1 >= Window.Width)
+                {
+                    livesGone[0] = true;
+                }
+            }
+            if (lifeCooldowns[1] == true)
+            {
+                lifeX2 += Time.DeltaTime * lifeSpeed;
+                if (lifeX2 >= Window.Width)
                 {
                     livesGone[1] = true;
                 }
             }
             if (lifeCooldowns[2] == true)
             {
-                lifeX2 += Time.DeltaTime * lifeSpeed;
-                if (lifeX2 >= Window.Width)
-                {
-                    livesGone[2] = true;
-                }
-            }
-            if (lifeCooldowns[3] == true)
-            {
                 lifeX3 += Time.DeltaTime * lifeSpeed;
                 if (lifeX3 >= Window.Width)
                 {
-                    livesGone[3] = true;
+                    livesGone[2] = true;
                 }
             }
 
