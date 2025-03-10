@@ -8,27 +8,62 @@ namespace MohawkGame2D
     public class Missle
     {
         Player player;
-        float missleSpeed = 250;
-        public static float missleX = 100;
+        DestructableWalls destrutableWalls;
+        public float missleX = 100;
+        public float missleY = 220;
+        public float missleSpeed = 250;
+        bool missleShot = false;
         public void misslesetup()
         {
             player = new Player();
+            destrutableWalls = new DestructableWalls();
         }
         public void missleRender()
         {
             Draw.FillColor = Color.Yellow;
-            Draw.Circle(missleX, player.playY + 20, 5);
-            if (Input.IsKeyboardKeyDown(KeyboardInput.Space))
+            Draw.Circle(missleX, missleY, 5);
+            //or hitswall
+            if (Input.IsKeyboardKeyPressed(KeyboardInput.Space) && !missleShot)
+            {
+                missleShot = true;
+                Console.WriteLine(missleShot);
+            }
+            if (missleShot == true)
             {
                 missleX += Time.DeltaTime * missleSpeed;
+            }
+                    if (missleX > 500 || missleX > destrutableWalls.scaffoldDestructionX)
+                    {
+                        if (missleX > destrutableWalls.scaffoldDestructionX)
+                        {
+                            bool wallhit = true;
+                            missleX = player.circleX;
+                            missleShot = false;
+                        }
+                        else if (missleX > 500)
+                        {
+                            missleX = player.circleX;
+                            missleShot = false;
+                        }
+                    }
+            }
+            public void missleFunction()
+        {
+            if (missleX <= 210)
+            {
 
-                //or hitswall
-                if (missleX > 500)
+                if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && missleY <= 350)
                 {
-                    missleX = player.circleX;
+                    missleY += Time.DeltaTime * player.playSpeed;
+                }
+                if (Input.IsKeyboardKeyDown(KeyboardInput.Up) && missleY >= 50)
+                {
+                    missleY -= Time.DeltaTime * player.playSpeed;
+
                 }
             }
         }
+       }
     }
-}
+
 

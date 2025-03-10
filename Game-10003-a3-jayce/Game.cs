@@ -34,11 +34,11 @@ namespace MohawkGame2D
             life = new Life();
             walls = new Wall();
             missle = new Missle();
+            life.lifeSetup();
             destructableWalls.destructableWallsetup();
             walls.wallSetup();
-            life.lifeSetup();
             missle.misslesetup();
-            life.lifeLost(800);
+            //life.lifeLost(800);
         }
 
         /// <summary>
@@ -47,19 +47,38 @@ namespace MohawkGame2D
         public void Update()
         {
             Window.ClearBackground(color: Color.DarkGray);
-            life.lives();
-            //gameover();
-            Draw.FillColor = Color.Black;
             player.Render();
             player.PlayerFunction();
+            missle.missleFunction();
+            //life.lifeLost2();
+            //gameover();
             missle.missleRender();
             destructableWalls.render();
             destructableWalls.destroyed();
-            destructableWalls.lives();
+            //destructableWalls.lives();
             walls.render();
-            walls.lives();
+            //walls.lives();
             life.livesRender();
+            life.lives();
             
+
         }
+        //public void lifeLost(float walltouching)
+        //{
+        //    if (walltouching >= player.circleX)
+        //    {
+
+        //        life.lifeCooldowns[0] = true;
+        //    }
+        //    else if (life.livesGone[0] == true && walltouching >= player.circleX)
+        //    {
+        //        life.lifeCooldowns[1] = true;
+        //    }
+        //    else if (life.livesGone[1] == true && walltouching >= player.circleX)
+        //    {
+        //        life.lifeCooldowns[2] = true;
+        //    }
+        //    walltouching = 800;
+        //}
     }
 }

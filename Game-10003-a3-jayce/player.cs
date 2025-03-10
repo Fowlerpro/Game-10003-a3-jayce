@@ -5,7 +5,7 @@ using System.Numerics;
 // The namespace your code is in.
 namespace MohawkGame2D
 {
-    public class Player
+    public class Player 
     {
         //player 
         public float playSpeed = 150;
@@ -14,18 +14,20 @@ namespace MohawkGame2D
         //jet
         public void Render()
         {
+            Draw.FillColor = Color.Black;
             Draw.Circle(circleX, playY, 10);
         }
         //player movement
         public void PlayerFunction()
         {
-            if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 300)
+            if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 350)
             {
                 playY += Time.DeltaTime * playSpeed;
             }
-            if (Input.IsKeyboardKeyDown(KeyboardInput.Up) && playY >= 100)
+            if (Input.IsKeyboardKeyDown(KeyboardInput.Up) && playY >= 50)
             {
                 playY -= Time.DeltaTime * playSpeed;
+
             }
         }
     }

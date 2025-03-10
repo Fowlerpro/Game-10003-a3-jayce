@@ -8,6 +8,7 @@ namespace MohawkGame2D
     public class Life
     {
         Player player;
+        DestructableWalls destructableWalls;
         int lifeY = 20;
         float lifeX1 = 300;
         float lifeX2 = 330;
@@ -15,12 +16,13 @@ namespace MohawkGame2D
         float emptyLifeX = 200;
         float lifeSpeed = 100;
         bool islife2Gone = false;
-        bool[] livesGone = [false, false, false];
-        bool[] lifeCooldowns = [false, false, false];
+       public  bool[] livesGone = [false, false, false];
+       public  bool[] lifeCooldowns = [false, false, false];
         float[] livesArray;
         public void lifeSetup()
         {
             player = new Player();
+            destructableWalls = new DestructableWalls();
             livesArray = new float[3];
         }
         public void livesRender()
@@ -44,21 +46,23 @@ namespace MohawkGame2D
                 Draw.Circle(lifeX, lifeY, 9);
             }
         }
-        public void lifeLost(float walltouching)
-        {  if (walltouching >= player.circleX)
-            {
-                lifeCooldowns[0] = true;
-            }
-            else if (livesGone[0] == true && walltouching >= player.circleX)
-            {
-                lifeCooldowns[1] = true;
-            }
-            else if (islife2Gone == true && walltouching >= player.circleX)
-            {
-                lifeCooldowns[2] = true;
-            }
-            walltouching = 800;
-        }
+        //public void lifeLost(float walltouching)
+        //{
+        //    if (walltouching >= player.circleX)
+        //    {
+
+        //        lifeCooldowns[0] = true;
+        //    }
+        //    else if (livesGone[0] == true && walltouching >= player.circleX)
+        //    {
+        //        lifeCooldowns[1] = true;
+        //    }
+        //    else if (livesGone[1] == true && walltouching >= player.circleX)
+        //    {
+        //        lifeCooldowns[2] = true;
+        //    }
+        //    walltouching = 800;
+        //}
         public void lives()
         {
             if (lifeCooldowns[0] == true)

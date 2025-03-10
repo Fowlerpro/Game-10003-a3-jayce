@@ -9,8 +9,9 @@ namespace MohawkGame2D
     {
         Player player;
         Life life;
+        Game game;
 
-        float scaffoldDestructionX = 600;
+       public float scaffoldDestructionX = 600;
         float scaffoldDestructionSpeed = 100;
 
         
@@ -18,6 +19,7 @@ namespace MohawkGame2D
         {
             player = new Player();
             life = new Life();
+            game = new Game();
         }
         public void render()
         {
@@ -38,13 +40,13 @@ namespace MohawkGame2D
             //    scaffoldDestructionX = 700;
             //}
         }
-        public void lives()
-        {
-            if (player.circleX >= scaffoldDestructionX)
-            {
+        //public void lives()
+        //{
+        //    if (player.circleX >= scaffoldDestructionX)
+        //    {
 
-                life.lifeLost(scaffoldDestructionX);
-            }
-        }
+        //        game.lifeLost(scaffoldDestructionX);
+        //    }
+        //} 
     }
 }
