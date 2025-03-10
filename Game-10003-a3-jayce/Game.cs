@@ -38,7 +38,7 @@ namespace MohawkGame2D
             destructableWalls.destructableWallsetup();
             walls.wallSetup();
             missle.misslesetup();
-            //life.lifeLost(800);
+            missle.missleWasShot();
         }
 
         /// <summary>
@@ -55,30 +55,37 @@ namespace MohawkGame2D
             missle.missleRender();
             destructableWalls.render();
             destructableWalls.destroyed();
-            //destructableWalls.lives();
             walls.render();
-            //walls.lives();
             life.livesRender();
             life.lives();
-            
+            missle.missleWasShot();
+            wallWasHit();
+
 
         }
-        //public void lifeLost(float walltouching)
-        //{
-        //    if (walltouching >= player.circleX)
-        //    {
+        //when the missle hits the wall
+        public void wallWasHit()
+        {
+            if (missle.missleX > 500 || missle.missleX > destructableWalls.scaffoldDestructionX)
+            {
+                if (missle.missleX >= destructableWalls.scaffoldDestructionX && missle.missleShot == true)
+                {
+                    missle.wallhit = true;
+                    if (missle.wallhit == true) {
+                        Console.WriteLine("Missle hit wall");
+                      }
+                    missle.missleX = player.circleX;
+                    missle.missleShot = false;
+                    destructableWalls.scaffoldDestructionX = 700;
 
-        //        life.lifeCooldowns[0] = true;
-        //    }
-        //    else if (life.livesGone[0] == true && walltouching >= player.circleX)
-        //    {
-        //        life.lifeCooldowns[1] = true;
-        //    }
-        //    else if (life.livesGone[1] == true && walltouching >= player.circleX)
-        //    {
-        //        life.lifeCooldowns[2] = true;
-        //    }
-        //    walltouching = 800;
-        //}
+                }
+                else if (missle.missleX >= 500)
+                {
+                    missle.missleX = player.circleX;
+                    missle.missleShot = false;
+                }
+            }
+        }
     }
 }
+

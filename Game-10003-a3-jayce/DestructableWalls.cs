@@ -35,18 +35,6 @@ namespace MohawkGame2D
             {
                 scaffoldDestructionX = 500;
             }
-            //else if (Game.missleX > scaffoldDestructionX)
-            //{
-            //    scaffoldDestructionX = 700;
-            //}
         }
-        //public void lives()
-        //{
-        //    if (player.circleX >= scaffoldDestructionX)
-        //    {
-
-        //        game.lifeLost(scaffoldDestructionX);
-        //    }
-        //} 
     }
 }

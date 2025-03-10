@@ -12,7 +12,8 @@ namespace MohawkGame2D
         public float missleX = 100;
         public float missleY = 220;
         public float missleSpeed = 250;
-        bool missleShot = false;
+        public bool missleShot = false;
+        public bool wallhit = false;
         public void misslesetup()
         {
             player = new Player();
@@ -22,34 +23,38 @@ namespace MohawkGame2D
         {
             Draw.FillColor = Color.Yellow;
             Draw.Circle(missleX, missleY, 5);
+        }
             //or hitswall
+            public void missleWasShot()
+        { 
             if (Input.IsKeyboardKeyPressed(KeyboardInput.Space) && !missleShot)
             {
                 missleShot = true;
-                Console.WriteLine(missleShot);
+                Console.WriteLine("Missle fired");
             }
             if (missleShot == true)
             {
                 missleX += Time.DeltaTime * missleSpeed;
             }
-                    if (missleX > 500 || missleX > destrutableWalls.scaffoldDestructionX)
-                    {
-                        if (missleX > destrutableWalls.scaffoldDestructionX)
-                        {
-                            bool wallhit = true;
-                            missleX = player.circleX;
-                            missleShot = false;
-                        }
-                        else if (missleX > 500)
-                        {
-                            missleX = player.circleX;
-                            missleShot = false;
-                        }
-                    }
+                    //if (missleX > 500 || missleX > destrutableWalls.scaffoldDestructionX)
+                    //{
+                    //    if (missleX >= destrutableWalls.scaffoldDestructionX && missleShot == true)
+                    //    {
+                    //        wallhit = true;
+                    //        Console.WriteLine(wallhit);
+                    //        missleX = player.circleX;
+                    //        missleShot = false;
+                    //    }
+                    //    else if (missleX > 500)
+                    //    {
+                    //        missleX = player.circleX;
+                    //        missleShot = false;
+                    //    }
+                    //}
             }
             public void missleFunction()
         {
-            if (missleX <= 210)
+            if (missleX <= 200)
             {
 
                 if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && missleY <= 350)
