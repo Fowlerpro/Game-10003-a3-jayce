@@ -16,6 +16,9 @@ namespace MohawkGame2D
         Life life;
         Wall walls;
         Missle missle;
+        Texture2D Background = Graphics.LoadTexture("../../../assets/textures/background.png");
+        float backgroundX = 0;
+        float backgroundSpeed = 10;
         //working on a life cooldown 
         // need array of scaffolds
         //need end screen
@@ -46,7 +49,7 @@ namespace MohawkGame2D
         /// </summary>
         public void Update()
         {
-            Window.ClearBackground(color: Color.DarkGray);
+            BackgroundMoving();
             player.Render();
             player.PlayerFunction();
             missle.missleFunction();
@@ -60,32 +63,70 @@ namespace MohawkGame2D
             life.lives();
             missle.missleWasShot();
             wallWasHit();
+            scaffoldCollision();
 
-
+        }
+        void BackgroundMoving()
+        {
+            backgroundX -= Time.DeltaTime * backgroundSpeed;
+            Graphics.Draw(Background, backgroundX, 0);
+            if (backgroundX > 0)
+            {
+                backgroundX = 0;
+            }
         }
         //when the missle hits the wall
         public void wallWasHit()
         {
-            if (missle.missleX > 500 || missle.missleX > destructableWalls.scaffoldDestructionX)
+            if (missle.missleX > Window.Width || missle.missleX > destructableWalls.scaffoldDestructionX)
             {
                 if (missle.missleX >= destructableWalls.scaffoldDestructionX && missle.missleShot == true)
                 {
                     missle.wallhit = true;
-                    if (missle.wallhit == true) {
+                    if (missle.wallhit == true)
+                    {
                         Console.WriteLine("Missle hit wall");
-                      }
+                        destructableWalls.scaffoldDestructionX = 700;
+                    }
                     missle.missleX = player.circleX;
+                    missle.missleY = player.playY + 5;
                     missle.missleShot = false;
-                    destructableWalls.scaffoldDestructionX = 700;
-
                 }
-                else if (missle.missleX >= 500)
+                else if (missle.missleX >= Window.Width)
                 {
                     missle.missleX = player.circleX;
+                    missle.missleY = player.playY + 5;
+                    missle.missleShot = false;
+                }
+                //need to add a cooldown in missle.cs
+            }
+        }
+        public void scaffoldCollision()
+        {
+            for (int i = 0; i < walls.wallcount; i++)
+            {
+                if (missle.missleX >= walls.scaffoldX1[i] && missle.missleX <= walls.scaffoldX1[i] + 60 && missle.missleShot == true && missle.missleY <= walls.wallposition1[i] + 400)
+                {
+                        missle.missleX = player.circleX;
+                    missle.missleY = player.playY + 5;
+                    missle.missleShot = false;
+                }
+                else if (missle.missleX >= walls.scaffoldX2[i] && missle.missleX <= walls.scaffoldX2[i]+60 && missle.missleShot == true && missle.missleY >= walls.wallposition2[i])
+                {
+                        missle.missleX = player.circleX;
+                    missle.missleY = player.playY + 5;
                     missle.missleShot = false;
                 }
             }
         }
+        //    public void lives()
+        //{
+        //    if (player.circleX >= walls.scaffoldX && player.playY)
+        //    {
+        //        lifeLost(scaffoldX);
+        //    }
+        //}
     }
-}
+   }
+
 

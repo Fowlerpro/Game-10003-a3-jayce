@@ -1,63 +1,46 @@
 ﻿// Include the namespaces (code libraries) you need below.
 using System;
 using System.Numerics;
+using System.Threading;
 
 // The namespace your code is in.
 namespace MohawkGame2D
 {
     public class Wall
     {
-        Player player;
-        Life life;
-        Game game;
         //Random scaffold walls
-        int wall1Y = 0;
-        int wall2Y = 300;
-        float scaffoldSpeed = 100;
-        public float scaffoldX = 420;
-        float scaffoldY = 0;
-        int wallcount = 9;
-        Vector2[] wallposition1;
-        Vector2[] wallposition2; 
+        public int wallcount = 200;
+        public int[] wallposition1;
+        public int[] wallposition2;
+        public float[] scaffoldX1;
+        public float[] scaffoldX2;
+        Texture2D wallTexture1 = Graphics.LoadTexture("../../../assets/textures/wall.png");
+        Texture2D wallTexture2 = Graphics.LoadTexture("../../../assets/textures/wall.png");
         public void wallSetup()
         {
-            player = new Player();
-            life = new Life();
-            game = new Game();
+            wallposition1 = new int[wallcount];
+            wallposition2 = new int[wallcount];
+            scaffoldX1 = new float[wallcount];
+            scaffoldX2 = new float[wallcount];
+            //creating the locations for the walls
+            for (int i = 0; i < wallcount; i++) {
+                wallposition1[i] = Random.Integer(-300,- 100);
+                wallposition2[i] = Random.Integer(300,400);
+                //start position and speed
+                scaffoldX1[i] = 420 + (i * 350);
+                scaffoldX2[i] = 660 + (i * 350);
+            }
         }
         public void render()
         {
-            //scaffold
-            // only activate when scaffold hits half way or space them out far enough
-            //if (scaffoldX < -5)
-            //{
-            //    scaffoldX = 420;
-            //}
-            wallposition1 = new Vector2[wallcount];
-            wallposition2 = new Vector2[wallcount];
+            Draw.FillColor = Color.Black;
             for (int i = 0; i < wallcount; i++)
             {
-                wallposition1[i].Y = Random.Integer(Window.Height, Window.Height +200);
-                wallposition2[i].Y = Random.Integer(Window.Height +300, Window.Height +400);
+                scaffoldX1[i] -= Time.DeltaTime * 100;
+                scaffoldX2[i] -= Time.DeltaTime * 100;
+                    Graphics.Draw(wallTexture1, scaffoldX1[i], wallposition1[i]);
+                Graphics.Draw(wallTexture2, scaffoldX2[i], wallposition2[i]);
             }
-            for (int i = 0; i < wallcount; i++)
-            {
-                if (scaffoldX < -5)
-                {
-                    scaffoldX = 420;
-                }
-                scaffoldX -= Time.DeltaTime * scaffoldSpeed;
-                Draw.FillColor = Color.Black;
-                Draw.Rectangle(scaffoldX, wallposition1[i].Y, 40, 200);
-                Draw.Rectangle(scaffoldX, wallposition2[i].Y, 40, 200);
-            }
-            //public void lives()
-            //{
-            //    if (player.circleX >= scaffoldX && player.playY >= walls1[] + 200  || walls2[] +200)
-            //    {
-            //        game.lifeLost(scaffoldX);
-            //    }
-            //}
+           }
         }
-    }
 }

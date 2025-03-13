@@ -7,25 +7,19 @@ namespace MohawkGame2D
 {
     public class DestructableWalls
     {
-        Player player;
-        Life life;
-        Game game;
-
+        Texture2D wallChain = Graphics.LoadTexture("../../../assets/textures/chainwall.png");
        public float scaffoldDestructionX = 600;
         float scaffoldDestructionSpeed = 100;
 
         
         public void destructableWallsetup()
         {
-            player = new Player();
-            life = new Life();
-            game = new Game();
         }
         public void render()
         {
             Draw.FillColor = Color.Blue;
 
-            Draw.Rectangle(scaffoldDestructionX, 0, 40, 400);
+            Graphics.Draw(wallChain,scaffoldDestructionX, 0);
             scaffoldDestructionX -= Time.DeltaTime * scaffoldDestructionSpeed;
         }
         public void destroyed()
