@@ -22,6 +22,7 @@ namespace MohawkGame2D
             Graphics.Draw(wallChain,scaffoldDestructionX, 0);
             scaffoldDestructionX -= Time.DeltaTime * scaffoldDestructionSpeed;
         }
+
         public void destroyed()
         {
 

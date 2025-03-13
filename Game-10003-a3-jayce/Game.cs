@@ -19,6 +19,7 @@ namespace MohawkGame2D
         Texture2D Background = Graphics.LoadTexture("../../../assets/textures/background.png");
         float backgroundX = 0;
         float backgroundSpeed = 10;
+        bool walltouching = false;
         //working on a life cooldown 
         // need array of scaffolds
         //need end screen
@@ -53,7 +54,7 @@ namespace MohawkGame2D
             player.Render();
             player.PlayerFunction();
             missle.missleFunction();
-            //life.lifeLost2();
+            lifeLost();
             //gameover();
             missle.missleRender();
             destructableWalls.render();
@@ -101,6 +102,18 @@ namespace MohawkGame2D
                 //need to add a cooldown in missle.cs
             }
         }
+        //player hits destructable wall
+        void playerHitChain()
+        {
+            if (player.circleX > destructableWalls.scaffoldDestructionX)
+            {
+                walltouching = true;
+            }
+            if (player.circleX < destructableWalls.scaffoldDestructionX)
+            {
+                walltouching = false;
+            }
+        }
         public void scaffoldCollision()
         {
             for (int i = 0; i < walls.wallcount; i++)
@@ -119,14 +132,23 @@ namespace MohawkGame2D
                 }
             }
         }
-        //    public void lives()
-        //{
-        //    if (player.circleX >= walls.scaffoldX && player.playY)
-        //    {
-        //        lifeLost(scaffoldX);
-        //    }
-        //}
+        public void lifeLost()
+        {
+            if (walltouching == true)
+            {
+
+                life.lifeCooldowns[0] = true;
+            }
+            else if (life.livesGone[0] == true && walltouching)
+            {
+                life.lifeCooldowns[1] = true;
+            }
+            else if (life.livesGone[1] == true && walltouching)
+            {
+                life.lifeCooldowns[2] = true;
+            }
+        }
     }
-   }
+}
 
 

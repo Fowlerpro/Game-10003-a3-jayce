@@ -9,60 +9,27 @@ namespace MohawkGame2D
     {
         Player player;
         DestructableWalls destructableWalls;
+        Texture2D helicopterLife = Graphics.LoadTexture("../../../assets/textures/helicopterlife.png");
         int lifeY = 20;
         float lifeX1 = 300;
         float lifeX2 = 330;
         float lifeX3 = 360;
-        float emptyLifeX = 200;
         float lifeSpeed = 100;
-        bool islife2Gone = false;
        public  bool[] livesGone = [false, false, false];
        public  bool[] lifeCooldowns = [false, false, false];
-        float[] livesArray;
         public void lifeSetup()
         {
             player = new Player();
             destructableWalls = new DestructableWalls();
-            livesArray = new float[3];
         }
         public void livesRender()
         {
-            for (int i = 0; i <3; i++)
-            {
-                int lifeX = 300 + i * 30;
-                Draw.FillColor = Color.Black;
-                Draw.Circle(lifeX, lifeY, 10);
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                int lifeX = 300 + i * 30;
-                Draw.FillColor = Color.Gray;
-                Draw.Circle(lifeX, lifeY, 9);
-            }
-            for (int i = 0;i < 3; i++)
-            {
-                int lifeX = 300 + i * 30;
-                Draw.FillColor = Color.Red;
-                Draw.Circle(lifeX, lifeY, 9);
-            }
-        }
-        //public void lifeLost(float walltouching)
-        //{
-        //    if (walltouching >= player.circleX)
-        //    {
 
-        //        lifeCooldowns[0] = true;
-        //    }
-        //    else if (livesGone[0] == true && walltouching >= player.circleX)
-        //    {
-        //        lifeCooldowns[1] = true;
-        //    }
-        //    else if (livesGone[1] == true && walltouching >= player.circleX)
-        //    {
-        //        lifeCooldowns[2] = true;
-        //    }
-        //    walltouching = 800;
-        //}
+                Draw.FillColor = Color.Red;
+                Graphics.Draw(helicopterLife,lifeX1, lifeY);
+                Graphics.Draw(helicopterLife, lifeX2, lifeY);
+                Graphics.Draw(helicopterLife, lifeX2, lifeY);
+        }
         public void lives()
         {
             if (lifeCooldowns[0] == true)
