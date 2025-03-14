@@ -11,24 +11,19 @@ namespace MohawkGame2D
         DestructableWalls destructableWalls;
         Texture2D helicopterLife = Graphics.LoadTexture("../../../assets/textures/helicopterlife.png");
         int lifeY = 20;
-        float lifeX1 = 300;
-        float lifeX2 = 330;
-        float lifeX3 = 360;
+        float lifeX1 = 270;
+        float lifeX2 = 300;
+        float lifeX3 = 330;
         float lifeSpeed = 100;
        public  bool[] livesGone = [false, false, false];
        public  bool[] lifeCooldowns = [false, false, false];
-        public void lifeSetup()
-        {
-            player = new Player();
-            destructableWalls = new DestructableWalls();
-        }
         public void livesRender()
         {
 
                 Draw.FillColor = Color.Red;
-                Graphics.Draw(helicopterLife,lifeX1, lifeY);
+                Graphics.Draw(helicopterLife, lifeX1, lifeY);
                 Graphics.Draw(helicopterLife, lifeX2, lifeY);
-                Graphics.Draw(helicopterLife, lifeX2, lifeY);
+                Graphics.Draw(helicopterLife, lifeX3, lifeY);
         }
         public void lives()
         {

@@ -10,7 +10,7 @@ namespace MohawkGame2D
         //player 
         public float playSpeed = 150;
         public float playY = 200;
-        public float circleX = 25;
+        public float circleX = 100;
         bool helicopterDown = false;
         bool helicopterUp = false;
 
@@ -31,7 +31,7 @@ namespace MohawkGame2D
             {
                 helicopter = helicopter1;
             }
-            if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 375)
+            if (Input.IsKeyboardKeyDown(KeyboardInput.Down) && playY <= 365)
             {
                 playY += Time.DeltaTime * playSpeed;
                 helicopterDown = true;
@@ -41,7 +41,7 @@ namespace MohawkGame2D
                 helicopter = helicopterAngledDown;
                 helicopterDown = false;
             }
-            if (Input.IsKeyboardKeyDown(KeyboardInput.Up) && playY >= 25)
+            if (Input.IsKeyboardKeyDown(KeyboardInput.Up) && playY >= 35)
             {
                 playY -= Time.DeltaTime * playSpeed;
                 helicopterUp = true;

@@ -24,7 +24,7 @@ namespace MohawkGame2D
             scaffoldX2 = new float[wallcount];
             //creating the locations for the walls
             for (int i = 0; i < wallcount; i++) {
-                wallposition1[i] = Random.Integer(-250,- 100);
+                wallposition1[i] = Random.Integer(-350,-150);
                 wallposition2[i] = Random.Integer(300,400);
                 //start position and speed
                 scaffoldX1[i] = 420 + (i * 350);

@@ -38,7 +38,6 @@ namespace MohawkGame2D
             life = new Life();
             walls = new Wall();
             missle = new Missle();
-            life.lifeSetup();
             destructableWalls.destructableWallsetup();
             walls.wallSetup();
             missle.misslesetup();
@@ -102,18 +101,7 @@ namespace MohawkGame2D
                 //need to add a cooldown in missle.cs
             }
         }
-        //player hits destructable wall
-        void playerHitChain()
-        {
-            if (player.circleX > destructableWalls.scaffoldDestructionX)
-            {
-                walltouching = true;
-            }
-            if (player.circleX < destructableWalls.scaffoldDestructionX)
-            {
-                walltouching = false;
-            }
-        }
+        //Missle collision with wall
         public void scaffoldCollision()
         {
             for (int i = 0; i < walls.wallcount; i++)
@@ -130,20 +118,34 @@ namespace MohawkGame2D
                     missle.missleY = player.playY + 5;
                     missle.missleShot = false;
                 }
+                //lives lost if player hits a wall
+                //if (player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] + 70 && player.playY <= walls.wallposition1[i] + 400 || player.circleX >= walls.scaffoldX2[i] && player.circleX <= walls.scaffoldX2[i] + 70 && player.playY >= walls.wallposition2[i] + 400)
+                //{
+
+                //    life.lifeCooldowns[0] = true;
+                //}
+                //if (life.livesGone[0] == true && player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] + 70 && player.playY <= walls.wallposition1[i] + 400 || life.livesGone[0] == true && player.circleX >= walls.scaffoldX2[i] && player.circleX >= walls.scaffoldX2[i] + 70 && player.playY <= walls.wallposition2[i] + 400)
+                //{
+                //    life.lifeCooldowns[1] = true;
+                //}
+                //if (life.livesGone[1] == true && player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] +70 && player.playY <= walls.wallposition1[i] + 400 || life.livesGone[1] == true&& player.circleX >= walls.scaffoldX2[i] && player.circleX >= walls.scaffoldX2[i] + 70 && player.playY <= walls.wallposition2[i] + 400)
+                //{
+                //    life.lifeCooldowns[2] = true;
+                //}
             }
         }
         public void lifeLost()
         {
-            if (walltouching == true)
+            if (player.circleX +30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
 
                 life.lifeCooldowns[0] = true;
             }
-            else if (life.livesGone[0] == true && walltouching)
+            if (life.livesGone[0] == true && player.circleX +30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
                 life.lifeCooldowns[1] = true;
             }
-            else if (life.livesGone[1] == true && walltouching)
+            if (life.livesGone[1] == true && player.circleX +30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
                 life.lifeCooldowns[2] = true;
             }
