@@ -1,5 +1,6 @@
 ﻿// Include the namespaces (code libraries) you need below.
 using System;
+using System.ComponentModel.Design;
 using System.Numerics;
 
 // The namespace your code is in.
@@ -19,7 +20,7 @@ namespace MohawkGame2D
         Texture2D Background = Graphics.LoadTexture("../../../assets/textures/background.png");
         float backgroundX = 0;
         float backgroundSpeed = 10;
-        bool walltouching = false;
+        bool playerHitWall = false;
         //working on a life cooldown 
         // need array of scaffolds
         //need end screen
@@ -108,48 +109,65 @@ namespace MohawkGame2D
             {
                 if (missle.missleX >= walls.scaffoldX1[i] && missle.missleX <= walls.scaffoldX1[i] + 60 && missle.missleShot == true && missle.missleY <= walls.wallposition1[i] + 400)
                 {
-                        missle.missleX = player.circleX;
+                    missle.missleX = player.circleX;
                     missle.missleY = player.playY + 5;
                     missle.missleShot = false;
                 }
-                else if (missle.missleX >= walls.scaffoldX2[i] && missle.missleX <= walls.scaffoldX2[i]+60 && missle.missleShot == true && missle.missleY >= walls.wallposition2[i])
+                else if (missle.missleX >= walls.scaffoldX2[i] && missle.missleX <= walls.scaffoldX2[i] + 60 && missle.missleShot == true && missle.missleY >= walls.wallposition2[i])
                 {
-                        missle.missleX = player.circleX;
+                    missle.missleX = player.circleX;
                     missle.missleY = player.playY + 5;
                     missle.missleShot = false;
                 }
                 //lives lost if player hits a wall
-                //if (player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] + 70 && player.playY <= walls.wallposition1[i] + 400 || player.circleX >= walls.scaffoldX2[i] && player.circleX <= walls.scaffoldX2[i] + 70 && player.playY >= walls.wallposition2[i] + 400)
-                //{
+                if (player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] + 70 && player.playY+10 <= walls.wallposition1[i] + 380)
+                {
+                    playerHitWall = true;
+                }
+                else if (player.circleX >= walls.scaffoldX2[i] && player.circleX <= walls.scaffoldX2[i] + 70 && player.playY +10 >= walls.wallposition2[i] + 390)
+                {
+                    playerHitWall = true;
+                }
+                if (Input.IsKeyboardKeyPressed(KeyboardInput.K))
+                {
+                    Console.WriteLine(playerHitWall);
+                    Console.WriteLine(life.livesGone[0]);
 
-                //    life.lifeCooldowns[0] = true;
-                //}
-                //if (life.livesGone[0] == true && player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] + 70 && player.playY <= walls.wallposition1[i] + 400 || life.livesGone[0] == true && player.circleX >= walls.scaffoldX2[i] && player.circleX >= walls.scaffoldX2[i] + 70 && player.playY <= walls.wallposition2[i] + 400)
-                //{
-                //    life.lifeCooldowns[1] = true;
-                //}
-                //if (life.livesGone[1] == true && player.circleX >= walls.scaffoldX1[i] && player.circleX <= walls.scaffoldX1[i] +70 && player.playY <= walls.wallposition1[i] + 400 || life.livesGone[1] == true&& player.circleX >= walls.scaffoldX2[i] && player.circleX >= walls.scaffoldX2[i] + 70 && player.playY <= walls.wallposition2[i] + 400)
-                //{
-                //    life.lifeCooldowns[2] = true;
-                //}
+                }
             }
         }
+
         public void lifeLost()
         {
-            if (player.circleX +30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
+            if (player.circleX + 30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
-
                 life.lifeCooldowns[0] = true;
             }
-            if (life.livesGone[0] == true && player.circleX +30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
+            if (playerHitWall)
+            {
+                life.lifeCooldowns[0] = true;
+                playerHitWall = false;
+            }
+            if (life.livesGone[0] == true && player.circleX + 30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
                 life.lifeCooldowns[1] = true;
             }
-            if (life.livesGone[1] == true && player.circleX +30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
+            if (life.livesGone[0] == true && playerHitWall == true)
+            {
+                life.lifeCooldowns[1] = true;
+                playerHitWall = false;
+            }
+            if (life.livesGone[1] == true && player.circleX + 30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
                 life.lifeCooldowns[2] = true;
             }
+            if (life.livesGone[1] == true && playerHitWall == true)
+            {
+                life.lifeCooldowns[2] = true;
+                playerHitWall = false;
+            }
         }
+        
     }
 }
 
