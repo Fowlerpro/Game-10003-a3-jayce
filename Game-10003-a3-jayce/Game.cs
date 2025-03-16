@@ -21,6 +21,8 @@ namespace MohawkGame2D
         float backgroundX = 0;
         float backgroundSpeed = 10;
         bool playerHitWall = false;
+        bool playing = false;
+        bool gameover = false;
         //working on a life cooldown 
         // need array of scaffolds
         //need end screen
@@ -50,12 +52,26 @@ namespace MohawkGame2D
         /// </summary>
         public void Update()
         {
+            if (playing)
+            {
+                Playing();
+            }
+            else if (gameover)
+            {
+                Window.ClearBackground(Color.Cyan);
+            }
+            else
+            {
+                Menu();
+            }
+        }
+        void Playing()
+        {
             BackgroundMoving();
             player.Render();
             player.PlayerFunction();
             missle.missleFunction();
             lifeLost();
-            //gameover();
             missle.missleRender();
             destructableWalls.render();
             destructableWalls.destroyed();
@@ -65,7 +81,15 @@ namespace MohawkGame2D
             missle.missleWasShot();
             wallWasHit();
             scaffoldCollision();
-
+        }
+        void Menu()
+        {
+            Window.ClearBackground(Color.OffWhite);
+            Console.WriteLine("Press Spacebar to Start");
+            if (Input.IsKeyboardKeyPressed(KeyboardInput.Space))
+            {
+                playing = true;
+            }
         }
         void BackgroundMoving()
         {
@@ -113,7 +137,7 @@ namespace MohawkGame2D
                     missle.missleY = player.playY + 5;
                     missle.missleShot = false;
                 }
-                else if (missle.missleX >= walls.scaffoldX2[i] && missle.missleX <= walls.scaffoldX2[i] + 60 && missle.missleShot == true && missle.missleY >= walls.wallposition2[i])
+                if (missle.missleX >= walls.scaffoldX2[i] && missle.missleX <= walls.scaffoldX2[i] + 60 && missle.missleShot == true && missle.missleY >= walls.wallposition2[i])
                 {
                     missle.missleX = player.circleX;
                     missle.missleY = player.playY + 5;
@@ -124,15 +148,9 @@ namespace MohawkGame2D
                 {
                     playerHitWall = true;
                 }
-                else if (player.circleX >= walls.scaffoldX2[i] && player.circleX <= walls.scaffoldX2[i] + 70 && player.playY +10 >= walls.wallposition2[i] + 390)
+                if (player.circleX >= walls.scaffoldX2[i] && player.circleX <= walls.scaffoldX2[i] + 70 && player.playY +10 >= walls.wallposition2[i])
                 {
                     playerHitWall = true;
-                }
-                if (Input.IsKeyboardKeyPressed(KeyboardInput.K))
-                {
-                    Console.WriteLine(playerHitWall);
-                    Console.WriteLine(life.livesGone[0]);
-
                 }
             }
         }
@@ -145,27 +163,41 @@ namespace MohawkGame2D
             }
             if (playerHitWall)
             {
-                life.lifeCooldowns[0] = true;
-                playerHitWall = false;
+                if (life.livesGone[0])
+                {
+                    if (life.livesGone[1])
+                    {
+                        life.lifeCooldowns[2] = true;
+                        playerHitWall = false;
+                    }
+                    else
+                    {
+                        life.lifeCooldowns[1] = true;
+                        playerHitWall = false;
+
+                    }
+                }
+                else
+                {
+                    life.lifeCooldowns[0] = true;
+                    playerHitWall = false;
+                }
             }
             if (life.livesGone[0] == true && player.circleX + 30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
                 life.lifeCooldowns[1] = true;
             }
-            if (life.livesGone[0] == true && playerHitWall == true)
-            {
-                life.lifeCooldowns[1] = true;
-                playerHitWall = false;
-            }
+
             if (life.livesGone[1] == true && player.circleX + 30 >= destructableWalls.scaffoldDestructionX && player.circleX >= destructableWalls.scaffoldDestructionX + 30)
             {
                 life.lifeCooldowns[2] = true;
             }
-            if (life.livesGone[1] == true && playerHitWall == true)
+            if (life.livesGone[2])
             {
-                life.lifeCooldowns[2] = true;
-                playerHitWall = false;
+                playing = false;
+                gameover = true;
             }
+            
         }
         
     }
