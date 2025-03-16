@@ -8,6 +8,9 @@ namespace MohawkGame2D
     public class Missle
     {
         Player player;
+        Texture2D missleTexture = Graphics.LoadTexture("../../../assets/textures/missle.png");
+        Texture2D missleTexture1 = Graphics.LoadTexture("../../../assets/textures/missle.png");
+        Texture2D missleTextureFlying = Graphics.LoadTexture("../../../assets/textures/misslemoving.png");
         public float missleX = 100;
         public float missleY = 220;
         public float missleSpeed = 250;
@@ -19,8 +22,8 @@ namespace MohawkGame2D
         }
         public void missleRender()
         {
-            Draw.FillColor = Color.Yellow;
-            Draw.Circle(missleX, missleY, 5);
+            
+            Graphics.Draw(missleTexture,missleX, missleY);
         }
             //or hitswall
             public void missleWasShot()
@@ -28,11 +31,16 @@ namespace MohawkGame2D
             if (Input.IsKeyboardKeyPressed(KeyboardInput.Space) && !missleShot && missleX <=200)
             {
                 missleShot = true;
+                missleTexture = missleTextureFlying;
                 Console.WriteLine("Missle fired");
             }
             if (missleShot == true)
             {
                 missleX += Time.DeltaTime * missleSpeed;
+            }
+            if (missleShot == false)
+            {
+                missleTexture = missleTexture1;
             }
            }
             public void missleFunction()

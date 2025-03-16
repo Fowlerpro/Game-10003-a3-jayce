@@ -22,7 +22,7 @@ namespace MohawkGame2D
         public void Render()
         {
             Draw.FillColor = Color.Black;
-            Graphics.Draw(helicopter,circleX, playY);
+            Graphics.Draw(helicopter,circleX - 50, playY - 30);
         }
         //player movement
         public void PlayerFunction()
