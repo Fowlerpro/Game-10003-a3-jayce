@@ -18,6 +18,8 @@ namespace MohawkGame2D
         Wall walls;
         Missle missle;
         Texture2D Background = Graphics.LoadTexture("../../../assets/textures/background.png");
+        Texture2D gameStart = Graphics.LoadTexture("../../../assets/textures/gameStart.png");
+        Texture2D gameOver = Graphics.LoadTexture("../../../assets/textures/gameOver.png");
         float backgroundX = 0;
         float backgroundSpeed = 10;
         bool playerHitWall = false;
@@ -58,7 +60,7 @@ namespace MohawkGame2D
             }
             else if (gameover)
             {
-                Window.ClearBackground(Color.Cyan);
+                Graphics.Draw(gameOver, 0, 0);
             }
             else
             {
@@ -84,8 +86,7 @@ namespace MohawkGame2D
         }
         void Menu()
         {
-            Window.ClearBackground(Color.OffWhite);
-            Console.WriteLine("Press Spacebar to Start");
+            Graphics.Draw(gameStart, 0, 0);
             if (Input.IsKeyboardKeyPressed(KeyboardInput.Space))
             {
                 playing = true;
